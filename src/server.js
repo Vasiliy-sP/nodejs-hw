@@ -45,7 +45,7 @@ app.use((req, res) => {
 });
 
 // 500 middleware
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.status(500).json({
     message: err.message,
   });
