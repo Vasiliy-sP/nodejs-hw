@@ -15,7 +15,7 @@ export const getAllNotes = async (req, res, next) => {
     const query = {};
 
     if (tag) {
-      query.tag = tag;                
+      query.tag = tag;
     }
 
     if (search) {
@@ -27,9 +27,7 @@ export const getAllNotes = async (req, res, next) => {
 
     const [totalNotes, notes] = await Promise.all([
       Note.countDocuments(query),
-      Note.find(query)
-        .skip(skip)
-        .limit(Number(perPage)),
+      Note.find(query).skip(skip).limit(Number(perPage)),
     ]);
 
     const totalPages = Math.ceil(totalNotes / perPage);
@@ -48,13 +46,9 @@ export const getAllNotes = async (req, res, next) => {
 
 export const createNote = async (req, res, next) => {
   try {
-    const { title, content, tag } = req.body;   
+    const { title, content, tag } = req.body;
 
-    const newNote = await Note.create({
-      title,
-      content,
-      tag,                                     
-    });
+    const newNote = await Note.create({ title, content, tag });
 
     res.status(201).json(newNote);
   } catch (error) {
@@ -80,14 +74,12 @@ export const getNoteById = async (req, res, next) => {
 export const updateNote = async (req, res, next) => {
   try {
     const { noteId } = req.params;
-    const { title, content, tag } = req.body;   
+    const { title, content, tag } = req.body;
+
     const note = await Note.findByIdAndUpdate(
       noteId,
-      { title, content, tag },               
-      { 
-        returnDocument: 'after',                
-        runValidators: true 
-      }
+      { title, content, tag },
+      { returnDocument: 'after', runValidators: true }
     );
 
     if (!note) {
@@ -110,7 +102,7 @@ export const deleteNote = async (req, res, next) => {
       throw createHttpError(404, 'Note not found');
     }
 
-    res.status(200).json(note);     
+    res.status(200).json(note);
   } catch (error) {
     next(error);
   }
