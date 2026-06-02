@@ -18,7 +18,7 @@ import {
 
 const router = Router();
 router.get(
-  '/',
+  '/notes',
   celebrate(getAllNotesSchema),
   getAllNotes,
 );
