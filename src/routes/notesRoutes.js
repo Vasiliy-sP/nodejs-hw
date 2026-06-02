@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { celebrate } from 'celebrate';
+import { authenticate } from '../middleware/authenticate.js';
 
+router.use(authenticate);
 import {
   getAllNotesSchema,
   noteIdSchema,
